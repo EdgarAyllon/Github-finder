@@ -6,6 +6,10 @@ GitHub user finder responsive SPA, retrieves info about user parse template and 
 
 Download repo, launch index.html using your prefered browser, query user nickname using input text, press enter or search button.
 
+## Testing
+
+Download repo, launch test.html using your prefered browser, to show test results.
+
 ### Technologies used
 
 - `Javascript ES6` (ECMACScript2015):

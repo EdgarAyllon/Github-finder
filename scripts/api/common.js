@@ -8,13 +8,12 @@
  * */
 
 /**
- * @function retrieve <ISOLATED ASYNC/PROMISED FUNCTION> send request to provider
+ * @function request <ISOLATED ASYNC/PROMISED FUNCTION> send request to provider
  * @param url <STRING> the url to fetch
  * @param options <OBJECT> the request header options
  * @return <OBJECT> with resolved response ( data or error )
  **/
-
-const retrieve = async ( url, options ) => {
+const request = async ( url, options ) => {
         
         // request to provider , Promise based, on resolve call method sendResults
         const status = ( response ) => {
@@ -46,6 +45,7 @@ const retrieve = async ( url, options ) => {
  */
 
 const build = ( node ) => {
+       
         // Util if template as more than one section, don't erases MAIN content.
         if( !node.nested ) document.querySelector( 'MAIN' ).innerHTML = ''
         

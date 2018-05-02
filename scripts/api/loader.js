@@ -10,7 +10,7 @@
         
         const script=[],
 
-              mainRoute = './scripts/api/providers/' ;
+              mainRoute = 'scripts/api/providers/' ;
         
         Object.keys( provider ).forEach( ( name , index ) => {
             
@@ -26,7 +26,7 @@
 
             const common = document.createElement( 'SCRIPT' );
                     
-                  common.setAttribute( 'src' , './scripts/api/common.js' )
+                  common.setAttribute( 'src' , 'scripts/api/common.js' )
                     
             script.unshift( common )
                     
