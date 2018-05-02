@@ -62,18 +62,20 @@ class Github{
         //Template for 'user' endpoint
         if ( 'user' === block && data){
             
-            const { avatar_url , name, login , url, bio} = data
+            const { avatar_url , name, login , html_url, bio, blog} = data,
             
-            const fullname = name ? `<a href='${url}'>${name}</a>` : 'no name provided'
+                fullname = `<a href='${html_url}'>${name || 'no name provided'}</a>`,
+
+                gitPage = `<a href='${blog}'>${login || 'no nickname provided'}</a>`,
             
-            const imageSrc = avatar_url ? `${avatar_url}` : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+                imageSrc = avatar_url ? `${avatar_url}` : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
         
             nodes = { data : `<header>
                                 <figure>
                                     <img src='${imageSrc}' alt='${name || 'none' }' />
                                     <figcaption>
                                         <p>${fullname}</p>
-                                        <p>@${login}</p>
+                                        <p>@${gitPage}</p>
                                     </figcaption>
                                 </figure>
                                 <p>${bio || 'This user did not provide any bio'}</p>
