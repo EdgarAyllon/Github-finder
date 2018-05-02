@@ -55,18 +55,26 @@ class Github{
 
     static template( block, data ) {
             
-        if( data === 404 ) return console.log( 'Template ' , data , data.length)
-        
         let nodes = ''
         
+        if( data === 404 ) {
+            return nodes = {
+                     data: '<h3>User not found</h3>',
+            }
+        }
+        if( data === 403 ){
+            return nodes = {
+                    data: '<h3>Keep calm and wait one minute to query</h3>',
+            }
+        }
         //Template for 'user' endpoint
-        if ( 'user' === block && data){
+        if( 'user' === block && data){
             
             const { avatar_url , name, login , html_url, bio, blog} = data,
             
-                fullname = `<a href='${bio}'>${name || 'no name provided'}</a>`,
+                fullname = `<a href='${bio || html_url}' target='_blank' >${name || 'no name provided'}</a>` ,
 
-                gitPage = `<a href='${html_url}'>@${login.toLowerCase() || 'no nickname provided'}</a>`,
+                gitPage = `<a href='${html_url}' target='_blank'>${login.toLowerCase() || 'no nickname provided'}</a>`,
             
                 imageSrc = avatar_url ? `${avatar_url}` : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
         
@@ -80,12 +88,11 @@ class Github{
                                 </figure>
                                 <p>${bio || 'This user did not provide any bio'}</p>
                             </header>`,
-                    blockNumber: 1
                     }
         } 
         
         // Template for 'repos' endpoint
-        if ( 'repos' === block && data ){
+        if( 'repos' === block && data ){
 
             const { login }  =  data[0].owner.login ;
 
@@ -104,7 +111,7 @@ class Github{
                                         <img src='img/forked.svg' alt='forks' /> ${forks_count}
                                     </mark>
                                     <mark>
-                                        <a href='${html_url}'>${name}</a>
+                                        <a href='${html_url}' target='_blank'>${name}</a>
                                     </mark>
                                     <mark>${language || 'others' }</mark>
                                 </summary>
@@ -114,9 +121,9 @@ class Github{
                         <hr />`
             })
             
-            nodes = { data : nodes , blockNumber : 2 }
+            nodes = { data : nodes , nested: true}
         }
-            return nodes
+        return nodes
     }
 
     /**
@@ -143,14 +150,23 @@ class Github{
 
                 .then(response => {
                     
-                            if ( response === 404 ) throw new URIError('user NOT FOUND') 
+                            if ( response === 404 ) {                                 
+                                
+                                cb( Github.template( endpoint.name , 404 )) ;
+                                throw new Error('Github: user NOT FOUND') 
+                            }
+                            if ( response === 403 ) {
+                                
+                                cb( Github.template( endpoint.name , 403 )) ;
+                                throw new Error('Github: Forbidden , API indicates that your reaches limit request in short period of time') 
+                            }
                             
                             cb( Github.template(  endpoint.name , response ) ) 
                 
                 })
 
-                .catch( error => console.log( 'Github : ', error.message ))
+                .catch( error => { throw new Error( error.message) })
             })
-        }// Todo else render template NOT FOUND 
+        } 
     }
 }
