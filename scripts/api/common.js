@@ -47,7 +47,7 @@ const retrieve = async ( url, options ) => {
 
 const build = ( node ) => {
         // Util if template as more than one section, don't erases MAIN content.
-        if( node.blockNumber === 1 ) document.querySelector( 'MAIN' ).innerHTML = ''
+        if( !node.nested ) document.querySelector( 'MAIN' ).innerHTML = ''
         
         const newElement = document.createElement( 'SECTION' );
               

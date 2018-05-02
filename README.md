@@ -6,11 +6,6 @@ GitHub user finder responsive SPA, retrieves info about user parse template and 
 
 Download repo, launch index.html using your prefered browser, query user nickname using input text, press enter or search button.
 
-### Methodologies
-- Agile.
-- Separation of concerns.
-- Extendable throught classes.
-
 ### Technologies used
 
 - `Javascript ES6` (ECMACScript2015):
@@ -18,7 +13,7 @@ Download repo, launch index.html using your prefered browser, query user nicknam
     - Promises.
     - Event Listeners.
     - Dom elements manipulation.
-    - Extending Classes.
+    - Classes.
     - Closures.
 - `HTML5`:
     - HTML5 new tags ( Header, Section, Main, Article, Mark)

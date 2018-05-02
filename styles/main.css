@@ -26,6 +26,10 @@ a:first-letter{
 hr{
     display: none;
     }
+h3{
+    display: flex;
+    justify-content: center;
+}
 /* SECTIONS */
 /* -------------------------------------------- NAV HEADER */
 body > header{
