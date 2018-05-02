@@ -20,7 +20,7 @@
  * 
  *  { ....
  * 
- * 
+ * Notes : <PROVIDER_NAME>
  */
 
 const providers = (() => {

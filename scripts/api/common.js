@@ -40,18 +40,18 @@ const retrieve = async ( url, options ) => {
 /**
  * 
  * @function build <ISOLATED FUNCTION> builds DOM elements 
- * @param {OBJECT<JSON>} node, the DOM node name to build
+ * @param {OBJECT<JSON>} node, the DOM element name to build
  * @returns {OBJECT} the DOM element builded
  * 
  */
 
 const build = ( node ) => {
-        
+        // Util if template as more than one section, don't erases MAIN content.
         if( node.blockNumber === 1 ) document.querySelector( 'MAIN' ).innerHTML = ''
         
-        let newElement = document.createElement( 'SECTION' );
+        const newElement = document.createElement( 'SECTION' );
               
             newElement.innerHTML = node.data
 
-        document.querySelector( 'main' ).appendChild( newElement )
+        document.querySelector( 'MAIN' ).appendChild( newElement )
 }

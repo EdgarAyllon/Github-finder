@@ -7,7 +7,7 @@ GitHub user finder responsive SPA, retrieves info about user parse template and 
 Download repo, launch index.html using your prefered browser, query user nickname using input text, press enter or search button.
 
 ### Methodologies
-
+- Agile.
 - Separation of concerns.
 - Extendable throught classes.
 
@@ -31,7 +31,7 @@ Download repo, launch index.html using your prefered browser, query user nicknam
 - Resources:
     - SVG.
 
-- TODO - Jasmine (for testing)
+- Jasmine (for testing)
 
 - Public Github API rest v3 without API Key.
 

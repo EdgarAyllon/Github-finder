@@ -12,9 +12,10 @@
  * 
  **/
 
-class Github {
+class Github{
      
     constructor( apiVersion ) {
+        
         this.baseUrl = 'https://api.github.com'
         this.options = {}
         this.apiVersion = this.isValid( apiVersion )
@@ -129,7 +130,7 @@ class Github {
     retrieve(query, cb) {
         
         if (Github.checkParams(query, cb)) {
-
+            
             let endpoints = Object.keys( providers.github[`${this.apiVersion}`] );
 
             endpoints.map( ( endpoint ) => {
