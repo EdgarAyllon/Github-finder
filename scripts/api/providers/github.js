@@ -38,10 +38,10 @@ class Github{
     }
 
     static checkParams(query, cb){
-
-        return (
-            (cb && cb instanceof Function) &&
-            (query && typeof query === 'string')) ? true : false
+        
+        if ( !query || !cb ) throw new Error('Github: Params needed')
+        
+        return ( cb instanceof Function && typeof query === 'string') ? true : false
     }
     
     /**
@@ -53,75 +53,70 @@ class Github{
      * 
      */
 
-    static template( block, data ) {
+    static template( block, data, isError ) {
             
         let nodes = ''
         
-        if( data === 404 ) {
-            return nodes = {
-                     data: '<h3>User not found</h3>',
+        if( isError ){
+            
+            nodes = ( data === 404 && { data: '<h3>User not found</h3>' } ) ||
+            
+                    ( data === 403 && { data: '<h3>Keep calm and wait one minute to query</h3>' } )
+                    
+        }else{
+
+            if( 'user' === block && data){
+                
+                const { avatar_url , name, login , html_url, bio, blog} = data,
+                
+                    fullname = `<a href='${bio || html_url}' target='_blank' >${name || 'no name provided'}</a>` ,
+
+                    gitPage = `<a href='${html_url}' target='_blank'>${login || 'no nickname provided'}</a>`,
+                
+                    imageSrc = avatar_url ? `${avatar_url}` : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+            
+                nodes = { data : `<header>
+                                    <figure>
+                                        <img src='${imageSrc}' alt='${name || 'none' }' />
+                                        <figcaption>
+                                            <p>${fullname}</p>
+                                            <p>${gitPage}</p>
+                                        </figcaption>
+                                    </figure>
+                                    <p>${bio || 'This user did not provide any bio'}</p>
+                                </header>`,
+                        }
+            } 
+            if( 'repos' === block && data ){
+               
+                const { login }  =  data[0].owner.login ;
+
+                data.map( ( repo, index ) => { 
+
+                    let { stargazers_count , forks_count, html_url , language, description, name  } = repo;
+
+                    // Please, no Emojis. Clean description
+                    description = description && description.replace(/[^\w\d\s\:\/\'\"\.]/gi,'') || 'No description available';
+
+                    nodes += `<article>
+                                <details open>
+                                    <summary>
+                                        <mark>
+                                            <img src='img/star.svg' alt='starred' /> ${stargazers_count}
+                                            <img src='img/forked.svg' alt='forks' /> ${forks_count}
+                                        </mark>
+                                        <mark>
+                                            <a href='${html_url}' target='_blank'>${name}</a>
+                                        </mark>
+                                        <mark>${language || 'others' }</mark>
+                                    </summary>
+                                    <p>${description}</p>
+                                </details>
+                            </article>
+                            <hr />`
+                })
+                nodes = { data : nodes , nested: true}
             }
-        }
-        if( data === 403 ){
-            return nodes = {
-                    data: '<h3>Keep calm and wait one minute to query</h3>',
-            }
-        }
-        //Template for 'user' endpoint
-        if( 'user' === block && data){
-            
-            const { avatar_url , name, login , html_url, bio, blog} = data,
-            
-                fullname = `<a href='${bio || html_url}' target='_blank' >${name || 'no name provided'}</a>` ,
-
-                gitPage = `<a href='${html_url}' target='_blank'>${login.toLowerCase() || 'no nickname provided'}</a>`,
-            
-                imageSrc = avatar_url ? `${avatar_url}` : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
-        
-            nodes = { data : `<header>
-                                <figure>
-                                    <img src='${imageSrc}' alt='${name || 'none' }' />
-                                    <figcaption>
-                                        <p>${fullname}</p>
-                                        <p>${gitPage}</p>
-                                    </figcaption>
-                                </figure>
-                                <p>${bio || 'This user did not provide any bio'}</p>
-                            </header>`,
-                    }
-        } 
-        
-        // Template for 'repos' endpoint
-        if( 'repos' === block && data ){
-
-            const { login }  =  data[0].owner.login ;
-
-            data.map( ( repo, index ) => { 
-
-                let { stargazers_count , forks_count, html_url , language, description, name  } = repo;
-
-                // Please, no Emojis. Clean description
-                description = description && description.replace(/[^\w\d\s\:\/\'\"\.]/gi,'') || 'No description available';
-
-                nodes += `<article>
-                            <details open>
-                                <summary>
-                                    <mark>
-                                        <img src='img/star.svg' alt='starred' /> ${stargazers_count}
-                                        <img src='img/forked.svg' alt='forks' /> ${forks_count}
-                                    </mark>
-                                    <mark>
-                                        <a href='${html_url}' target='_blank'>${name}</a>
-                                    </mark>
-                                    <mark>${language || 'others' }</mark>
-                                </summary>
-                                <p>${description}</p>
-                            </details>
-                        </article>
-                        <hr />`
-            })
-            
-            nodes = { data : nodes , nested: true}
         }
         return nodes
     }
@@ -138,7 +133,7 @@ class Github{
 
     retrieve(query, cb) {
         
-        if (Github.checkParams(query, cb)) {
+        if ( Github.checkParams(query, cb) ) {
             
             let endpoints = Object.keys( providers.github[`${this.apiVersion}`] );
 
@@ -146,27 +141,28 @@ class Github{
             
                 endpoint = providers.github[`${this.apiVersion}`][endpoint]
 
-                retrieve(`${this.baseUrl}${endpoint(query)}`, this.options )
+                request(`${this.baseUrl}${endpoint(query)}`, this.options )
 
                 .then(response => {
                     
                             if ( response === 404 ) {                                 
                                 
-                                cb( Github.template( endpoint.name , 404 )) ;
-                                throw new Error('Github: user NOT FOUND') 
+                                throw new Error(404) 
                             }
-                            if ( response === 403 ) {
-                                
-                                cb( Github.template( endpoint.name , 403 )) ;
-                                throw new Error('Github: Forbidden , API indicates that your reaches limit request in short period of time') 
-                            }
+                            else if ( response === 403 ) {
+
+                                throw new Error(403) 
+                            }else{
                             
                             cb( Github.template(  endpoint.name , response ) ) 
+
+                            }
                 
                 })
-
-                .catch( error => { throw new Error( error.message) })
+                .catch( error => { cb( Github.template( null , Number(error.message) , true ) ) })
             })
+        }else{
+            return false
         } 
     }
 }
