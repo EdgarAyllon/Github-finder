@@ -64,9 +64,9 @@ class Github{
             
             const { avatar_url , name, login , html_url, bio, blog} = data,
             
-                fullname = `<a href='${html_url}'>${name || 'no name provided'}</a>`,
+                fullname = `<a href='${bio}'>${name || 'no name provided'}</a>`,
 
-                gitPage = `<a href='${blog}'>${login || 'no nickname provided'}</a>`,
+                gitPage = `<a href='${html_url}'>@${login.toLowerCase() || 'no nickname provided'}</a>`,
             
                 imageSrc = avatar_url ? `${avatar_url}` : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
         
@@ -75,7 +75,7 @@ class Github{
                                     <img src='${imageSrc}' alt='${name || 'none' }' />
                                     <figcaption>
                                         <p>${fullname}</p>
-                                        <p>@${gitPage}</p>
+                                        <p>${gitPage}</p>
                                     </figcaption>
                                 </figure>
                                 <p>${bio || 'This user did not provide any bio'}</p>
