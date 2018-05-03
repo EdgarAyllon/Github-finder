@@ -161,8 +161,6 @@ class Github{
                 })
                 .catch( error => { cb( Github.template( null , Number(error.message) , true ) ) })
             })
-        }else{
-            return false
-        } 
+        }
     }
 }

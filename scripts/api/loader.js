@@ -16,8 +16,6 @@
             
                 script[ index ] = document.createElement( 'SCRIPT' )
 
-                //script[ index ].setAttribute( 'async' , true )
-                    
                 script[ index ].setAttribute( 'src' , `${ mainRoute }${ name }.js` )
             
         })
