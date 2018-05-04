@@ -2,6 +2,10 @@
 
 GitHub user finder responsive SPA, retrieves info about user parse template and injects it to DOM.
 
+### Online Demo
+
+[Surge.sh demo page](http://github-user-finder.surge.sh/)
+
 ### Use case
 
 Download repo, launch index.html using your prefered browser, query user nickname using input text, press enter or search button.

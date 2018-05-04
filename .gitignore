@@ -28,5 +28,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Directories GIT, node_modules
+node_modules
+.git
 
 # End of https://www.gitignore.io/api/macos
