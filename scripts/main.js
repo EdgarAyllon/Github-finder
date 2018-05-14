@@ -19,12 +19,12 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
           loader = document.createElement('SCRIPT');
     
-    config.setAttribute('src' , './scripts/api/config.js')
+    config.setAttribute('src' , './scripts/config.js')
 
-    loader.setAttribute('src' , './scripts/api/loader.js')
+    loader.setAttribute('src' , './scripts/loader.js')
 
     document.body.appendChild( config )
-
+    
     document.body.appendChild( loader )
 
 }, false )
@@ -42,6 +42,6 @@ form.addEventListener('submit', function (e) {
     const provider = new Github('v3')
 
     // Send request with query( value ) and use callback( build ) to show results.
-   provider.retrieve( value, build )
+   provider.retrieve( value, viewHTML )
  
 }, false)

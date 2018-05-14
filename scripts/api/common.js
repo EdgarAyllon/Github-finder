@@ -8,50 +8,36 @@
  * */
 
 /**
- * @function request <ISOLATED ASYNC/PROMISED FUNCTION> send request to provider
+ * 
+ * @function request <ASYNC FUNCTION> send request to provider
  * @param url <STRING> the url to fetch
  * @param options <OBJECT> the request header options
- * @return <OBJECT> with resolved response ( data or error )
- **/
-const request = async ( url, options ) => {
-        
+ * @param endpoint <STRING> containing the provider name to assign callback response
+ * @param cb <REFERENCE/FUNCTION> the callback 
+ * @return <OBJECT> with resolved response ( data or error ).
+ * 
+ *  **/
+const request = async ( url, options, provider, endpoint, cb ) => {
         // request to provider , Promise based, on resolve call method sendResults
-        const status = ( response ) => {
-            
-            return response.status === 200 ? 
-            
-                            Promise.resolve( response.json() ) :
-                            
-                            Promise.reject( new Error( response.status ))
-        };
 
-        const makeRequest = fetch( url , options )
-                
-                        .then( response =>  status( response ) )
-
-                        .then( response =>  response  )
-                        
-                        .catch( error =>  Number(error.message) );
-
-        return makeRequest
-}
-
-/**
- * 
- * @function build <ISOLATED FUNCTION> builds DOM elements 
- * @param {OBJECT<JSON>} node, the DOM element name to build
- * @returns {OBJECT} the DOM element builded
- * 
- */
-
-const build = ( node ) => {
-       
-        // Util if template as more than one section, don't erases MAIN content.
-        if( !node.nested ) document.querySelector( 'MAIN' ).innerHTML = ''
+        const request = new Promise( ( resolve,reject ) =>{
         
-        const newElement = document.createElement( 'SECTION' );
-              
-            newElement.innerHTML = node.data
+                       fetch( url , options )
 
-        document.querySelector( 'MAIN' ).appendChild( newElement )
+                        .then( response =>  {
+                            
+                            if ( response.status === 200 || response.status === 304 ) resolve( response.json() ) 
+                        
+                            else reject( response )
+                        })
+
+                        .catch( error =>  reject( error ) )
+                
+        })
+
+        Promise.all(  [ request ]  )
+
+                .then( data => cb( provider, endpoint, data[0] )  ) 
+                        
+                .catch( error => cb( null, null, `e${error.status || 0}` ) ) 
 }
