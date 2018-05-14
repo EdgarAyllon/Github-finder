@@ -22,18 +22,16 @@
  * 
  * Notes : <PROVIDER_NAME>
  */
-
 const providers = (() => {
 
-    return {
-        github: {
-                    v3: {
-                        
-                        user: ( query ) => `/users/${query}` ,
+        return {
+                    github: {
+                                v3: {
+                                    
+                                    user: ( query ) => `/users/${query}` ,
 
-                        repos: ( query ) => `/users/${query}/repos` 
+                                    repos: ( query ) => `/users/${query}/repos` 
+                                }
                     }
-        },
-    }
-
+                }
 })()
