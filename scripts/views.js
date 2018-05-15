@@ -29,7 +29,7 @@ function viewHTML ( provider, endpoint , data ){
 
                                 const { avatar_url , name, login , html_url, bio, blog } = data,
                         
-                                    fullname = `<a href='${bio || html_url}' target='_blank' >${name || 'no name provided'}</a>` ,
+                                    fullname = `${name || 'no name provided'}` ,
 
                                     gitPage = `<a href='${html_url}' target='_blank'>${login || 'no nickname provided'}</a>`;
                     
