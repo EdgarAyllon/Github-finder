@@ -39,6 +39,8 @@ Download repo, launch test.html to show test results.
 - Public Github API rest v3 without API Key.
 
 ### Screenshots
-![screenshot](img/screenshot1.png)
+Desktop view
 ![screenshot](img/screenshot2.png)
 
+Responsive view
+![responsive](img/screenshot3.png)
