@@ -40,7 +40,9 @@ Download repo, launch test.html to show test results.
 
 ### Screenshots
 Desktop view
+
 ![screenshot](img/screenshot2.png)
 
 Responsive view
+
 ![responsive](img/screenshot3.png)
