@@ -1,6 +1,6 @@
 describe('Test Github api client', () => {
     
-    let resultUser, resultRepo;
+    let resultUser, resultRepos;
 
     const testApi = async testParam => {
          
