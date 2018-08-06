@@ -1,14 +1,16 @@
 ## Github user finder
 
-GitHub user finder responsive SPA, retrieves info about user parse template and injects it to DOM.
+GitHub user finder, simple UI to find user info.
 
-### Online Demo
+### Online Demos
 
-[Surge.sh demo page](http://github-user-finder.surge.sh/)
+[App demo page](http://github-user-finder.surge.sh/)
+
+[Test results page]( http://github-user-finder.surge.sh/test.html)
 
 ### Use case
 
-Download repo, launch index.html using your prefered browser, query user nickname using input text, press enter or search button.
+Fill input with user nickname, press enter or search button, tha'ts all.
 
 ### Testing
 
@@ -20,17 +22,16 @@ Download repo, launch test.html to show test results.
     - Asynchronous calls using fetch API
     - Promises.
     - Event Listeners.
-    - Dom elements manipulation.
-    - Classes.
+    - Dom element manipulation.
     - Closures.
 - `HTML5`:
-    - HTML5 new tags ( Header, Section, Main, Article, Mark)
+    - HTML5 new tags( Header, Section, Main)
 - `CSS3`:
     - Flex.
     - Media queries.
     - Rem units.
-    - Browser hooks ( Not tested under IE, EDGE, linux develop environment ).
-    - Pure CSS3 , classless ( no classes or id ).
+    - Browser hooks.
+    - No external libraries.
 - Resources:
     - SVG.
 
@@ -39,10 +40,14 @@ Download repo, launch test.html to show test results.
 - Public Github API rest v3 without API Key.
 
 ### Screenshots
-Desktop view
+
+
+![screenshot](img/screenshot1.png)
 
 ![screenshot](img/screenshot2.png)
 
-Responsive view
+![screenshot](img/screenshot3.png)
 
-![responsive](img/screenshot3.png)
+![screenshot](img/screenshot4.png)
+
+![screenshot](img/screenshot5.png)

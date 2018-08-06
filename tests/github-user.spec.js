@@ -1,69 +1,205 @@
-describe('Test Github Finder', () => {
+describe('Test Github api client', () => {
     
-    describe('Github class constructor tests:', () => {
+    let resultUser, resultRepo;
+
+    const testApi = async testParam => {
+         
+            resultUser = await github.user( testParam )
+            resultRepos = await github.repos( testParam )
+            
+            return { ...resultUser, ...resultRepos }
+        }
+    describe(`Test param TYPES passed to api-client endpoints USER and REPOS, only allowed STRING :`, () => {
+    
+        it(`- STRING 'edgarayllon' MUST return user and repos info`, async () => {
         
-        it('- Create a new instance of class with correct API version - new Github(\'v3\')', () => {
+            await testApi( 'edgarayllon' )
             
-            let test = new Github('v3')
+            expect( resultUser && resultRepos ).not.toBeUndefined()
+            expect( resultUser.login && resultRepos.length).toBeTruthy()
+        })
             
-            expect( test instanceof Github ).toBeTruthy()
-            
-        });
+        it(`- UNDEFINED must return false`, async () => {
         
-        it('- New instance retrieves Object and Object.baseUri must be https://api.github.com', () => {
-            
-            const provider = new Github('v3')
-            
-            expect( provider instanceof Object ).toBeTruthy()
-            
-            expect( provider.baseUrl ).toBe('https://api.github.com')
-            
+            await testApi( undefined )
+
+            expect( resultUser && resultRepos ).not.toBeUndefined()
+            expect( resultUser && resultRepos ).toBeFalsy()
         })
 
-        it('- Throw Error on wrong API version - new Github(\'v2\')', () => {
-            
-        expect( () => new Github('v2') ).toThrow(new Error('Github : API version not defined / wrong API version'))
+        it(`- NULL must return false`, async () => {
         
+            await testApi( null )
+
+            expect( resultUser && resultRepos ).not.toBeUndefined()
+            expect( resultUser && resultRepos ).toBeFalsy()
         })
         
-        it('- Throw Error on NO API version - new Github()', () => {
-            
-            expect( () => new Github() ).toThrow(new Error('Github : API version not defined / wrong API version'))
+        it(`- NUMBER must return false`, async () => {
         
+            await testApi( 2 )
+
+            expect( resultUser && resultRepos ).not.toBeUndefined()
+            expect( resultUser && resultRepos ).toBeFalsy()
         })
-        it('- Throw Type Error when \'new\' is omited to invoke constructor', () => {
-            
-            expect( () => Github('v3') ).toThrow(new Error('Class constructor Github cannot be invoked without \'new\''))
+
+        it(`- OBJECT must return false`, async () => {
         
+            await testApi( {} )
+            
+            expect( resultUser && resultRepos ).not.toBeUndefined()
+            expect( resultUser && resultRepos ).toBeFalsy()
+
+            await testApi( { test: 'test' } )
+            
+            expect( resultUser && resultRepos ).not.toBeUndefined()
+            expect( resultUser && resultRepos ).toBeFalsy()
         })
-        it('- Throw Reference Error when version type is passed by reference , not string - new Github(v3)', () => {
+
+        it(`- ARRAY must return false`, async () => {
             
-            expect( () => new Github(v3) ).toThrow(new Error('v3 is not defined'))
+            await testApi( [] )
+            
+            expect( resultUser && resultRepos ).not.toBeUndefined()
+            expect( resultUser && resultRepos ).toBeFalsy()
+            
+            await testApi( ['test', 1] )
+                        
+            expect( resultUser && resultRepos ).not.toBeUndefined()
+            expect( resultUser && resultRepos ).toBeFalsy()
+        })
+
+        it(`- SYMBOL must return false`, async () => {
         
+            await testApi( Symbol('test') )
+            
+            expect( resultUser && resultRepos ).not.toBeUndefined()
+            expect( resultUser && resultRepos ).toBeFalsy()
+        })
+        
+        it(`- FUNCTION must return false`, async () => {
+            
+            await testApi( ( test )=> test )
+            
+            expect( resultUser && resultRepos ).not.toBeUndefined()
+            expect( resultUser && resultRepos ).toBeFalsy()
+        })
+
+        it(`- BOOLEAN must return false`, async () => {
+            
+            await testApi( true )
+            
+            expect( resultUser && resultRepos ).not.toBeUndefined()
+            expect( resultUser && resultRepos ).toBeFalsy()
+
+            await testApi( false )
+            
+            expect( resultUser && resultRepos ).not.toBeUndefined()
+            expect( resultUser && resultRepos ).toBeFalsy()
         })
     })
-    describe('Github class Functions', () =>{
+
+    describe('Test if STRING param follow Github API username specs.', () =>{
         
-        //-- Check Github.checkParams
-        it('- Github.checkParams - Return true if params are valid', () => {
+        it(`-  'AbC', '111', 'A1B22' are valid alphanumeric in range A-Z, 0-9`, async () => {
 
-            expect( Github.checkParams( 'EdgarAyllon' , viewHTML ) ).toBe( true )
-        })
-        it('- Github.checkParams - Return false if at least one param ( query, callback ) is invalid - query must be String, callback must be Function', () => {
-
-            const paramOne = 3, paramTwo = 'Welcome Fail'
+            await testApi( 'AbC' )
             
-            expect( Github.checkParams( paramOne, paramTwo )).toBe( false )
-        })
-        it('- Github.checkParams - Throw Error if one of the params are undefined', () => {
+            expect( resultUser ).not.toBeFalsy()
+            
+            await testApi( '111' )
+            
+            expect( resultUser ).not.toBeFalsy()
 
-            expect( () => Github.checkParams( viewHTML ) ).toThrow(new Error('Github: Params needed ( query , callback )'))
-        })
-        it('- Github.checkParams - Must be instantiated throught class otherwise throw ReferenceError', ()=>{
+            await testApi( 'A1B22' )
 
-            expect( ()=> checkParams( 'EdgarAyllon', viewHTML)).toThrow(new ReferenceError('checkParams is not defined'))
+            expect( resultUser ).not.toBeFalsy()
         })
-  
+
+        it(`-  'ÑU', '1Ñ1', 'A1Ç' are NOT valid, alphanumeric in range A-Z, 0-9`, async () => {
+
+            await testApi( 'ÑU' )
+            
+            expect( resultUser ).toBeFalsy()
+            
+            await testApi( '1Ñ1' )
+            
+            expect( resultUser ).toBeFalsy()
+
+            await testApi( 'A1Ç' )
+
+            expect( resultUser ).toBeFalsy()
+        })
+
+        it(`-  'A/B', 'A=C', 'D?A1' are NOT valid, because special chars`, async () => {
+
+            await testApi( 'A/B' )
+            
+            expect( resultUser ).toBeFalsy()
+            
+            await testApi( 'A=C' )
+            
+            expect( resultUser ).toBeFalsy()
+
+            await testApi( 'D?A1' )
+
+            expect( resultUser ).toBeFalsy()
+        })
+
+        it(`- 'A1-B-22' and 'A-1B22' are valid, hypen can separate characters`, async () => {
+
+            await testApi( 'A1-B-22' )
+
+            expect (resultUser ).not.toBeFalsy()
+            
+            await testApi( 'A-1B2-2' )
+
+            expect( resultUser ).not.toBeFalsy()
+        })
+
+        it(`- '-A1B22', 'A1B22-' and '-A1B22-' are NOT valid, username begins or ends with hypen`, async () => {
+
+            await testApi( '-A1B22' )
+
+            expect( resultUser ).toBeFalsy()
+       
+            await testApi( 'A1B22-' )
+
+            expect( resultUser ).toBeFalsy()
+       
+            await testApi( '-A1B22-' )
+
+            expect( resultUser ).toBeFalsy()
+        })
+        
+        it(`- 'A--1B22' and 'A-1B---22' are NOT valid, can't use two or more hypen consecutive`, async () => {
+
+            await testApi( 'A--1B22' )
+
+            expect( resultUser ).toBeFalsy()
+
+            await testApi( 'A-1B---22' )
+
+            expect( resultUser ).toBeFalsy()
+        })
+    })
+
+    describe('Test returned values of Github api.', () =>{
+        
+        it(`-  'edgarayllon', returns user existence, name 'Edgar Ayllon' and repos`, async () => {
+
+            await testApi( 'edgarayllon' )
+            
+            expect( resultUser ).not.toBeFalsy()
+            expect( resultUser.name='Edgar Ayllon' && resultRepos.length > 0 ).toBeTruthy()
+        })
+
+        it(`-  '28845', returns 'Not Found'`, async () => {
+
+            await testApi( '28845' )
+            
+            expect( resultUser ).not.toBeFalsy()
+            expect( resultUser.message='Not Found' ).toBeTruthy()
+        })
     })
 })
-

@@ -9,17 +9,17 @@
     <link rel='stylesheet' href='./styles/main.css'>
 </head>
 <body>
-    <header>
-        <figure>
-            <img src='img/logo.svg' alt='Github user finder' />
-            <figcaption>Github user finder</figcaption>
-        </figure>
-        <form>
-            <input type='text' placeholder='Search username' name='search'>
-            <button type='submit' >Search</button>
-        </form>
-    </header>
-    <main></main>
+    <main>
+        <section name='form'>
+            <form>
+                <input type='text' placeholder='Search username...' name='search' max='39' required>
+                <input type='submit' value='Search' />
+            </form>
+        </section>
+     </main>
+    
+    <script src='scripts/api/github.js'></script>
+    <script src='scripts/views.js'></script>
     <script src='scripts/main.js'></script>
 </body>
 </html>

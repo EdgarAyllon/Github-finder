@@ -1,47 +1,33 @@
-/**
- * @name Main
- * 
- * @author Edgar Ayllon
- *
- * - Main file
- * 
- **/
-
-// Select elements ( form, input[name='search']) from the DOM 
-
-const form = document.querySelector('form'),
-
+/* -- Global vars -- */
+const 
+      main = document.querySelector('MAIN'),
+      form = document.querySelector('form'),
       input = document.querySelector('input[name="search"]');
 
-document.addEventListener('DOMContentLoaded', ()=> {
-   
-    const config = document.createElement('SCRIPT'),
+form.addEventListener( 'submit', async e => {
+      
+      e.preventDefault()
+      // first fetch 'user' and await response, if github api message is 'Not found' don't fetch repos
+      const 
+            { value } = input,
+            user  = await github.user( value ),
+            repos = user.login ? await github.repos( value ) : null;
+      
+      // Assign error variable values using 3 cases:
+      //  - Param validation on api-client fails , due bad params, returns user === false .
+      //  - Param Validation on api-client ok but Github has no user, returns 'Not Found' in user.message or other error messages.
+      //  - Param Validation on api-client ok and user exist on Github, assign null to error ( no errors)
+      let error = user === false ?
+                              'Value must be filled and follow Github API username specs (A-Z, 0-9).'
+                              : user.message ? 
+                                    user.message
+                                    : null;
+      
+      
+      formatHTML( { user , repos , error })
 
-          loader = document.createElement('SCRIPT');
-    
-    config.setAttribute('src' , './scripts/config.js')
+      input.value=''
+      
+      input.focus()
 
-    loader.setAttribute('src' , './scripts/loader.js')
-
-    document.body.appendChild( config )
-    
-    document.body.appendChild( loader )
-
-}, false )
-
-// Adds listener to event submit on form element, prevent the default action, and cancel event bubble ( false ).
-
-form.addEventListener('submit', function (e) {
-    
-    e.preventDefault()
-    // Assign value from input ( Destructuring assignment )
-    const { value } = input
-    input.value = ''
-    
-    // Create new instance to Github class provider
-    const provider = new Github('v3')
-
-    // Send request with query( value ) and use callback( build ) to show results.
-   provider.retrieve( value, viewHTML )
- 
 }, false)
