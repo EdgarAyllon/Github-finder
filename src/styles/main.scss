@@ -1,0 +1,156 @@
+/* -- base font-size : 14px=0.07143rem */
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,700&subset=latin-ext');
+@import './variables.scss';
+@import './animations.scss';
+@import './generatedClassNames.scss';
+
+html {
+  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
+  font-size: 14px;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  @include gradient--to-right($coral, $purple);
+  @extend %flex-column;
+  align-items: center;
+  color: $white;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+span{
+  line-height: 0;
+}
+
+// FORM
+form {
+  @extend %flex;
+  align-self: center;
+  transition: box-shadow 0.5s ease;
+  &:focus-within {
+    border-color: $white;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba($white, 0.65),
+      inset 0 0 10px rgba($purple, 0.65);
+    outline: none;
+  }
+  div:first-child {
+    border-bottom-left-radius: 3px;
+    border-right: none;
+    border-top-left-radius: 3px;
+    border: 1px solid $white;
+    padding: 12px 10px;
+  }
+  input[type='search'] {
+    background: transparent;
+    border: none;
+    min-width: 238px;
+    outline: none;
+    &:focus {
+      outline: none;
+      border-color: none;
+    }
+    @include placeholder {
+      color: rgba($white, 0.8);
+      font-style: italic;
+    }
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
+  }
+  button[type='submit'] {
+    background: transparent;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+    border: 1px solid $white;
+    color: $white;
+    cursor: pointer;
+    padding: 10px 20px;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    &:hover {
+      background: $white;
+      color: $purple;
+      outline: none;
+    }
+  }
+}
+
+// MAIN CONTAINER 
+main {
+  @include no-select;
+  @include gradient--to-top(lighten($purple, 5%), $coral);
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), 5px 10px 10px rgba(0, 0, 0, 0.2);
+  height: calc(100vh - 260px);
+  margin-top: 85px;
+  width: calc(50%);
+  min-width: 350px;
+  padding: 32px 16px;
+  position: relative;
+  transition: all 0.5s ease;
+
+  &[data-error] {
+    background: lighten($red, 50%);
+    border-radius: 5px;
+    border: 1px solid lighten($red, 70%);
+    color: $red;
+    max-height: 20px;
+  }
+
+  img {
+    border: 6px solid $purple;
+    background: lighten($purple, 20%);
+    border-radius: 50%;
+    box-shadow: 0 0 10px $purple;
+    height: 100px;
+    left: 50%;
+    position: absolute;
+    top: 0;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    z-index: 4;
+  }
+}
+
+// SECTIONS
+section {
+  animation: fadeIn 0.5s ease;
+  overflow-y: scroll;
+  overflow: hidden;
+  max-height: calc(50%);
+  min-width: calc(100%);
+}
+
+// CLASSES
+.sublime-first-letter{
+  line-height: 2.85rem;
+  @include sublime-first-letter($white,$purple)
+}
+
+/* -- Media query -- */
+@media (min-width: 360px) and (max-width: 544px) {
+  html {
+    font-size: 14px;
+  }
+  body{
+    align-self: center;
+  }
+  main{
+    min-width: 350px;
+  }
+  #bio{
+    display: none;
+  }
+}
+@media (max-width: 360px){
+  html{
+    font-size: 12px;
+  }
+}

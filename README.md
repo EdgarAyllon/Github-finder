@@ -6,7 +6,6 @@ GitHub user finder, simple UI to find user info.
 
 [App demo page](http://github-user-finder.surge.sh/)
 
-[Test results page]( http://github-user-finder.surge.sh/test.html)
 
 ### Use case
 
@@ -14,40 +13,27 @@ Fill input with user nickname, press enter or search button, tha'ts all.
 
 ### Testing
 
-Download repo, launch test.html to show test results.
+Download repo and use.
+```
+npm run test
+```
+or
+```
+yarn test
+```
 
 ### Technologies used
-
-- `Javascript ES6` (ECMACScript2015):
-    - Asynchronous calls using fetch API
-    - Promises.
-    - Event Listeners.
-    - Dom element manipulation.
-    - Closures.
-- `HTML5`:
-    - HTML5 new tags( Header, Section, Main)
-- `CSS3`:
-    - Flex.
-    - Media queries.
-    - Rem units.
-    - Browser hooks.
-    - No external libraries.
-- Resources:
-    - SVG.
-
-- Jasmine (for testing)
+- `Javascript ES6` (ECMACScript2015).
+- `HTML5`.
+- `SASS/SCSS/CSS3`.
+- `WEBPACK 4` as package bundler.
+- `KARMA and JASMINE` for TDD.
 
 - Public Github API rest v3 without API Key.
 
 ### Screenshots
 
+![screenshot](media/screenshot1.jpg)
 
-![screenshot](img/screenshot1.png)
-
-![screenshot](img/screenshot2.png)
-
-![screenshot](img/screenshot3.png)
-
-![screenshot](img/screenshot4.png)
-
-![screenshot](img/screenshot5.png)
+![screenshot](media/screenshot2.jpg)
+![screenshot](media/screenshot3.jpg)

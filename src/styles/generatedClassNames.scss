@@ -1,0 +1,117 @@
+@import './variables.scss';
+
+// GENERATED CLASSES
+// COLOR
+.c {
+ @include modifiers($colors,'color', '--','-');
+ text-shadow: 0 0 1px rgba(0,0,0,.5);
+}
+// BACGROUND COLOR
+.bg {
+  @include modifiers($colors,'background-color', '--','-');
+}
+// FONT
+.f{
+  line-height: 0;
+  @include modifiers($font-weights, 'font-weight', 'w--');
+  @include modifiers($font-sizes-14, 'font-size', 's--');
+}
+
+
+// MARGIN - PADDING
+.mg {
+  @include modifiers($px-units, 'margin', '--')
+}
+.mt {
+  @include modifiers($px-units, 'margin-top', '--')
+}
+.mb {
+  @include modifiers($px-units, 'margin-bottom', '--')
+}
+.mr{
+  @include modifiers($px-units, 'margin-right', '--')
+}
+.ml{
+  @include modifiers($px-units, 'margin-left', '--')
+}
+
+.pd{
+  @include modifiers($px-units, 'padding', '--')
+}
+.pl{
+  @include modifiers($px-units, 'padding-left', '--')
+}
+.pr{
+  @include modifiers($px-units, 'padding-right', '--')
+}
+.pt{
+  @include modifiers($px-units, 'padding-top', '--')
+}
+.pb{
+  @include modifiers($px-units, 'padding-bottom', '--')
+}
+
+// FLEX
+%flex {
+  display: flex;
+  align-self: center;
+}
+%flex-row{
+  @extend %flex;
+  flex-direction: row;
+}
+%flex-column{
+  @extend %flex;
+  flex-direction: column
+}
+.flex__column {
+  @extend %flex-column;
+  align-items: center;
+}
+.flex__row {
+  @extend %flex-row;
+  align-items: center;
+  justify-content: center;
+}
+.flex__text--inline {
+  @extend %flex-row;
+  align-items: baseline;
+}
+
+.justify--center{
+  @extend %flex;
+  justify-content: center;
+}
+
+.justify--to-end{
+  @extend %flex;
+  justify-content: flex-end;
+}
+.justify--to-start{
+  @extend %flex;
+  justify-content: flex-start;
+}
+.justify--evently{
+  @extend %flex;
+  justify-content: space-evenly;
+}
+.justify--between{
+  @extend %flex;
+  justify-content: space-between;
+}
+.justify--around{
+  @extend %flex;
+  justify-content: space-around;
+}
+.align--center{
+  @extend %flex;
+  align-items: center;
+}
+.align--to-end{
+  @extend %flex;
+  align-items: flex-end;
+}
+.align--to-start{
+  @extend %flex;
+  align-items: flex-start;
+}

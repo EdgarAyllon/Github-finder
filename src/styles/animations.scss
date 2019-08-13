@@ -1,0 +1,13 @@
+/* -- Animations -- */
+@keyframes fadeIn {
+  0%,
+  50% {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  75%,
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
