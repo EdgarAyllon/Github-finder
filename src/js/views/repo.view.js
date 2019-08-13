@@ -35,7 +35,7 @@ function repoView(repos) {
       </div>
       
       <div class="flex__row justify--evently mt--30">
-        <span class="flex__column">
+        <span class="flex__column mr--10">
           <a href="${mostStarred.html_url}" target="_blank" class="fs--14-lg fw--xb mb--20 c--primary">
             <i class="fas fa-link"></i> ${mostStarred.name}
           </a>
