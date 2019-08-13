@@ -11,13 +11,13 @@ function userView({
 }) {
   const follows = type === 'User' && (
     `<span class="flex__column mr--30 ml--30">
-      <p class="fs--14-xxl f fw--b c--accent">${following}</p>
-      <p>Following</p>
+      <p class="fs--14-xxl f fw--b">${following}</p>
+      <p class="c--accent fw--xb">Following</p>
     </span>
 
     <span class="flex__column">
-      <p class="fs--14-xxl f fw--b c--accent">${followers}</p>
-      <p>Followers</p>
+      <p class="fs--14-xxl f fw--b">${followers}</p>
+      <p class="c--accent fw--xb">Followers</p>
     </span>`
   );
 
@@ -36,7 +36,7 @@ function userView({
       
       <span class="flex__column">
         <p class="fas fa-map-marker-alt f fs--14-xxl fw--b c--accent"></p>
-        <p class="f fw--xb c--accent-l5">${location || 'Unknown'}</p>
+        <p class="f fw--xb">${location || 'Unknown'}</p>
       </span>
     ${follows || ''}
     </div>

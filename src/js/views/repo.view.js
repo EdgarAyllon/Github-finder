@@ -1,7 +1,7 @@
 function repoView(repos) {
   
   let repositories = `
-    <div class="mt--30 flex__row justify--center c--accent fs--14-xl fw--b">
+    <div class="mt--30 flex__row justify--center fs--14 fw--b">
       User has no repos or they are private
     </div>`;
   
@@ -22,15 +22,15 @@ function repoView(repos) {
       <div class="flex__row mt--30">
         <span class="flex__column">
           <p class="fs--14-xxl f fw--b">${repos.length}</p>
-          <p class="c--accent">Total</p>
+          <p class="c--accent fw--xb">Total</p>
         </span>
         <span class="flex__column mr--30 ml--30">
           <p class="fs--14-xxl f fw--b">${totalStars}</p>
-          <p class="fas fa-star f c--accent"></p>
+          <p class="fas fa-star f fw--xb c--accent"></p>
         </span>
         <span class="flex__column">
           <p class="fs--14-xxl f fw--b">${totalForks}</p>
-          <p class="fas fa-code-branch f c--accent"></p>
+          <p class="fas fa-code-branch f fw--xb c--accent"></p>
         </span>
       </div>
       
@@ -39,14 +39,14 @@ function repoView(repos) {
           <a href="${mostStarred.html_url}" target="_blank" class="fs--14-lg fw--xb mb--20 c--primary">
             <i class="fas fa-link"></i> ${mostStarred.name}
           </a>
-          <p class="c--accent fw--b">Top <i class="fas fa-star f"></i></p>
+          <p class="c--accent fw--xb">Top <i class="fas fa-star f"></i></p>
         </span>
         
         <span class="flex__column">
           <a href="${mostForked.html_url}" target="_blank" class="fs--14-lg fw--xb mb--20 c--primary">
             <i class="fas fa-link"></i> ${mostForked.name}
           </a>
-          <p class="c--accent fw--b">Top <i class="fas fa-code-branch f"></i></p>
+          <p class="c--accent fw--xb">Top <i class="fas fa-code-branch f"></i></p>
         </span>
       </div>`  
   }
