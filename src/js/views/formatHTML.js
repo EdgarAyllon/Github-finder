@@ -17,7 +17,7 @@ function formatHTML({ user, repos, error }) {
     main.innerText = error;
   }
   else {
-    main.innerHTML = userView(user) + repoView(repos);
+    main.innerHTML = userView(user) + repoView(repos, user.public_repos);
   }
 }
 export { formatHTML };

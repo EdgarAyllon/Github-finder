@@ -1,4 +1,4 @@
-function repoView(repos) {
+function repoView(repos, totalRepos) {
   
   let repositories = `
     <div class="mt--30 flex__row justify--center fs--14 fw--b">
@@ -21,7 +21,7 @@ function repoView(repos) {
     repositories = `
       <div class="flex__row mt--30">
         <span class="flex__column">
-          <p class="fs--14-xxl f fw--b">${repos.length}</p>
+          <p class="fs--14-xxl f fw--b">${totalRepos}</p>
           <p class="c--accent fw--xb">Total</p>
         </span>
         <span class="flex__column mr--30 ml--30">
